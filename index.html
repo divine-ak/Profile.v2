@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anand Kumar</title>
+    <meta property="og:title" content="Anand Kumar | Aspiring Web Dev">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400;1,600&family=Poppins:wght@300;400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blood-darkest: #1a0000;
+            --blood-dark: #4a0000;
+            --blood-mid: #8b0000;
+            --blood-bright: #cc0000;
+            --blood-glow: #ff1a1a;
+            --pitch-black: #020000;
+            --text-main: #e0e0e0;
+            --text-muted: #888888;
+            --nav-width: 80px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--pitch-black);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            font-size: 15px;
+        }
+
+        /* ========== AMBIENT SPARKS (Embers) ========== */
+        #sparks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .spark {
+            position: absolute;
+            bottom: -10px;
+            background: var(--blood-glow);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--blood-bright), 0 0 20px var(--blood-glow);
+            opacity: 0;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) scale(0.2); opacity: 0; }
+        }
+
+        /* ========== SIDE NAVIGATION ========== */
+        .side-nav {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: var(--nav-width);
+            background: linear-gradient(to right, rgba(0,0,0,0.95), rgba(0,0,0,0.4));
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(139, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            gap: 3rem;
+        }
+
+        .nav-logo {
+            writing-mode: vertical-rl;
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--blood-bright);
+            letter-spacing: 5px;
+            margin-top: 40px;
+            margin-bottom: auto;
+            text-shadow: 0 0 15px var(--blood-dark);
+        }
+
+        .nav-item {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 300;
+            letter-spacing: 3px;
+            font-size: 0.85rem;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            width: 2px;
+            height: 0;
+            background: var(--blood-glow);
+            transform: translateY(-50%);
+            transition: height 0.4s ease;
+            box-shadow: 0 0 10px var(--blood-glow);
+        }
+
+        .nav-item:hover {
+            color: #fff;
+            text-shadow: 0 0 15px var(--blood-glow);
+        }
+
+        .nav-item:hover::after, .nav-item.active::after {
+            height: 100%;
+        }
+
+        .main-content {
+            margin-left: var(--nav-width);
+            width: calc(100% - var(--nav-width));
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== HERO SECTION WITH ORBS ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 15vh 20px;
+        }
+
+        .hero-orbs {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.6;
+            animation: orbDrift 15s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .orb-1 {
+            width: 60vw; height: 60vw;
+            background: radial-gradient(circle, var(--blood-mid), transparent 70%);
+            top: -20%; left: -10%;
+        }
+
+        .orb-2 {
+            width: 50vw; height: 50vw;
+            background: radial-gradient(circle, var(--blood-dark), transparent 70%);
+            bottom: -10%; right: -10%;
+            animation-delay: -5s;
+            animation-duration: 20s;
+        }
+        
+        .orb-3 {
+            width: 40vw; height: 40vw;
+            background: radial-gradient(circle, var(--blood-bright), transparent 60%);
+            top: 30%; left: 40%;
+            opacity: 0.3;
+            animation-delay: -10s;
+            animation-duration: 25s;
+        }
+
+        @keyframes orbDrift {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(5%, 10%) scale(1.1); }
+            100% { transform: translate(-5%, -5%) scale(0.95); }
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 5.5rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 40px rgba(204, 0, 0, 0.5);
+            line-height: 1.1;
+        }
+
+        .hero .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-style: italic;
+            color: var(--blood-bright);
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        .hero .tagline {
+            font-size: 1.1rem;
+            color: #bbb;
+            margin-bottom: 50px;
+            font-weight: 300;
+            letter-spacing: 1.5px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 45px;
+            border: 1px solid var(--blood-bright);
+            background: rgba(10, 0, 0, 0.6);
+            color: #fff;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 26, 26, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn:hover {
+            background: var(--blood-mid);
+            box-shadow: 0 0 30px rgba(204, 0, 0, 0.4);
+            transform: translateY(-3px);
+            border-color: var(--blood-glow);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+        }
+
+        /* ========== GENERAL SECTIONS ========== */
+        section {
+            padding: 120px 50px;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            color: #fff;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(139, 0, 0, 0.8);
+        }
+
+        .section-separator {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--blood-glow), transparent);
+            margin: 20px auto;
+            box-shadow: 0 0 15px var(--blood-bright);
+        }
+
+        .section-subtitle {
+            color: var(--blood-bright);
+            font-size: 1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        /* ========== PHILOSOPHY (ABOUT) ========== */
+        .philosophy-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, rgba(20, 0, 0, 0.8), rgba(5, 0, 0, 0.9));
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            padding: 60px;
+            position: relative;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8), 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        .philosophy-container::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 30px;
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+            color: rgba(204, 0, 0, 0.15);
+            line-height: 1;
+        }
+
+        .philosophy-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            line-height: 1.9;
+            color: #ddd;
+            text-align: justify;
+            position: relative;
+            z-index: 2;
+        }
+
+        .philosophy-highlight {
+            color: var(--blood-glow);
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        /* ========== CINEMATIC CARDS (Timeline & Grids) ========== */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cinematic-card {
+            background: rgba(8, 2, 2, 0.7);
+            border: 1px solid rgba(139, 0, 0, 0.2);
+            padding: 45px 35px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cinematic-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--blood-mid), transparent);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .cinematic-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(15, 0, 0, 0.85);
+            border-color: rgba(204, 0, 0, 0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.9), 0 0 30px rgba(139, 0, 0, 0.2);
+        }
+
+        .cinematic-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(204, 0, 0, 0.4));
+        }
+
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .card-meta {
+            color: var(--blood-bright);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .card-desc {
+            color: #aaa;
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+
+        .card-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .card-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            color: #aaa;
+        }
+
+        .card-list li::before {
+            content: '♦';
+            position: absolute;
+            left: 0;
+            color: var(--blood-bright);
+            font-size: 0.8rem;
+            top: 4px;
+        }
+
+        /* ========== CONTACT SECTION ========== */
+        .contact-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .contact-btn {
+            min-width: 180px;
+            font-size: 1rem;
+            background: rgba(10, 0, 0, 0.8);
+            border-color: var(--blood-mid);
+        }
+
+        .contact-btn i {
+            margin-right: 10px;
+            font-style: normal;
+            font-size: 1.2rem;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            padding: 60px 20px 100px;
+            text-align: center;
+            border-top: 1px solid rgba(139, 0, 0, 0.2);
+            background: linear-gradient(to top, var(--pitch-black), transparent);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--blood-bright);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .footer-copy {
+            color: #555;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+        }
+
+        /* ========== CINEMATIC SCROLL REVEAL ========== */
+        .cinematic-reveal {
+            opacity: 0;
+            transform: translateY(50px) scale(0.95);
+            filter: blur(15px);
+            transition: all 1.2s cubic-bezier(0.25, 1, 0.2, 1);
+        }
+
+        .cinematic-reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .side-nav { width: 60px; }
+            .main-content { margin-left: 60px; width: calc(100% - 60px); }
+            .hero h1 { font-size: 3.2rem; }
+            .hero .subtitle { font-size: 1.4rem; }
+            section { padding: 80px 25px; }
+            .philosophy-container { padding: 40px 25px; }
+            .philosophy-text { font-size: 1.2rem; }
+            .grid-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="sparks-container"></div>
+
+    <div class="side-nav">
+        <div class="nav-logo">AK</div>
+        <a href="#home" class="nav-item active">HOME</a>
+        <a href="#about" class="nav-item">ABOUT</a>
+        <a href="#timeline" class="nav-item">JOURNEY</a>
+        <a href="#mindset" class="nav-item">MINDSET</a>
+        <a href="#interests" class="nav-item">INTERESTS</a>
+        <a href="#contact" class="nav-item">CONNECT</a>
+    </div>
+
+    <div class="main-content">
+        <section class="hero" id="home">
+            <div class="hero-orbs">
+                <div class="orb orb-1"></div>
+                <div class="orb orb-2"></div>
+                <div class="orb orb-3"></div>
+            </div>
+            
+            <div class="hero-content cinematic-reveal">
+                <h1>hiii, i'm Anand</h1>
+                <p class="subtitle">Operating from the shadows</p>
+                <p class="tagline">
+                    Blending the logic of chemistry with the power of code. I build quietly, moving away from conventional noise to engineer a life of absolute freedom, deep focus, and sharp aesthetics.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#timeline" class="btn">Explore Journey</a>
+                    <a href="#contact" class="btn" style="background: var(--blood-dark); border-color: var(--blood-bright);">Establish Contact</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="section-header cinematic-reveal">
+                <h2 class="section-title">The Architect</h2>
+                <div class="section-separator"></div>
+                <p class="section-subtitle">Beyond the surface</p>
+            </div>
+            
+            <div class="philosophy-container cinematic-reveal">
+                <p class="philosophy-text">
+                    I am a B.Sc. Chemistry student by day and a self-taught developer by night. I do not chase empty job titles or follow crowded paths. I prefer the <span class="philosophy-highlight">mysterious atmosphere of the background</span>, acting as the unseen force that drives things forward. Using AI as my ultimate multiplier, my true ambition is designing an independent reality filled with high end technology, global exploration, and total financial sovereignty.
+                </p>
+            </div>
+        </section>
+
+        <section id="timeline">
+            <div class="section-header cinematic-reveal">
+                <h2 class="section-title">The Evolution</h2>
+                <div class="section-separator"></div>
+                <p class="section-subtitle">A chronological sequence</p>
+            </div>
+
+            <div class="grid-container">
+                <div class="cinematic-card cinematic-reveal"> 
+                    <span class="card-icon">🏛️</span> 
+                    <h3 class="card-title">Foundation</h3> 
+                    <div class="card-meta">Early Years</div> 
+                    <p class="card-desc">Completing my 10th grade at Divine Happy School beneath the CBSE board. This era built my analytical roots and disciplined approach to complex problems.</p> 
+                </div>
+
+                <div class="cinematic-card cinematic-reveal"> 
+                    <span class="card-icon">⚡</span> 
+                    <h3 class="card-title">The Shift</h3> 
+                    <div class="card-meta">11th & 12th Grade</div> 
+                    <p class="card-desc">Transitioning to MLJ College in Bhagalpur under the BSEB board. A period defined by deep adaptability, unlearning, and surviving sudden environmental shifts.</p> 
+                </div>
+
+                <div class="cinematic-card cinematic-reveal"> 
+                    <span class="card-icon">🏢</span> 
+                    <h3 class="card-title">Corporate Shadows</h3> 
+                    <div class="card-meta">2023 — Present</div> 
+                    <p class="card-desc">Operating behind the scenes at Medicolife Private Limited. Managing critical data, coordinating HR workflows, and executing precise corporate design elements while remaining anonymous in my impact.</p> 
+                </div>
+
+                <div class="cinematic-card cinematic-reveal"> 
+                    <span class="card-icon">🧪</span> 
+                    <h3 class="card-title">Scientific Pursuit</h3> 
+                    <div class="card-meta">Present Day</div> 
+                    <p class="card-desc">Currently in my 2nd Year of B.Sc Chemistry (Honors) at BN College, TMBU. Balancing the strict laws of chemical reactions with the abstract logic of the real world.</p> 
+                </div>
+
+                <div class="cinematic-card cinematic-reveal"> 
+                    <span class="card-icon">💻</span> 
+                    <h3 class="card-title">Digital Awakening</h3> 
+                    <div class="card-meta">Present Day</div> 
+                    <p class="card-desc">Mastering the architecture of the web through HTML, CSS, and JS. I learn by tearing things down and building them back up, using advanced AI as my silent mentor.</p> 
+                </div>
+
+                <div class="cinematic-card cinematic-reveal"> 
+                    <span class="card-icon">♟️</span> 
+                    <h3 class="card-title">The End Game</h3> 
+                    <div class="card-meta">Future Vision</div> 
+                    <p class="card-desc">Complete financial independence. Building an ultimate RGB gaming sanctuary. Traveling the world without asking for permission. Winning the game on my own terms.</p> 
+                </div>
+            </div>
+        </section>
+
+        <section id="mindset">
+            <div class="section-header cinematic-reveal">
+                <h2 class="section-title">Mental Framework</h2>
+                <div class="section-separator"></div>
+                <p class="section-subtitle">The inner algorithms</p>
+            </div>
+
+            <div class="grid-container">
+                <div class="cinematic-card cinematic-reveal"> 
+                    <span class="card-icon">🧠</span>
+                    <h3 class="card-title">Rapid Absorption</h3> 
+                    <p class="card-desc">The internet is my true university. I process information violently fast, adapting to new tools and environments before others even realize the landscape has changed.</p> 
+                </div>
+                <div class="cinematic-card cinematic-reveal"> 
+                    <span class="card-icon">👁️</span>
+                    <h3 class="card-title">Unseen Architect</h3> 
+                    <p class="card-desc">I do not need the spotlight. I prefer the quiet power of the background, pulling the strings, optimizing systems, and letting the final results speak for themselves.</p> 
+                </div>
+                <div class="cinematic-card cinematic-reveal"> 
+                    <span class="card-icon">🎯</span>
+                    <h3 class="card-title">Lethal Focus</h3> 
+                    <p class="card-desc">Whether balancing complex chemical equations or debugging intricate code structures, I immerse myself completely into the void of the task until it yields.</p> 
+                </div>
+            </div>
+        </section>
+
+        <section id="interests">
+            <div class="section-header cinematic-reveal">
+                <h2 class="section-title">Beyond The Code</h2>
+                <div class="section-separator"></div>
+                <p class="section-subtitle">Fueling the void</p>
+            </div>
+
+            <div class="grid-container">
+                <div class="cinematic-card cinematic-reveal"> 
+                    <span class="card-icon">🎮</span> 
+                    <h3 class="card-title">Digital Realms</h3> 
+                    <ul class="card-list">
+                        <li>Mastering environments in GTA, Assassin’s Creed, and Sleeping Dogs</li>
+                        <li>Currently dominating mobile spheres</li>
+                        <li>Scheming the ultimate high end RGB battle station</li>
+                    </ul> 
+                </div>
+                <div class="cinematic-card cinematic-reveal"> 
+                    <span class="card-icon">🎬</span> 
+                    <h3 class="card-title">Cinematic Tastes</h3> 
+                    <ul class="card-list">
+                        <li>Deep lore of the Marvel Universe and The Flash</li>
+                        <li>Studying the philosophy and dominance of Gojo in Jujutsu Kaisen</li>
+                        <li>Drawn to emotional, atmospheric, and gripping narratives</li>
+                    </ul> 
+                </div>
+                <div class="cinematic-card cinematic-reveal"> 
+                    <span class="card-icon">⚔️</span> 
+                    <h3 class="card-title">Sharp Aesthetics</h3> 
+                    <ul class="card-list">
+                        <li>Obsessed with moody, mysterious, and night time atmospheres</li>
+                        <li>Fascinated by the precision of Katanas and the engineering of sports cars</li>
+                        <li>Everything must possess a certain dark elegance</li>
+                    </ul> 
+                </div>
+                <div class="cinematic-card cinematic-reveal"> 
+                    <span class="card-icon">🎵</span> 
+                    <h3 class="card-title">Sonic Ambitions</h3> 
+                    <ul class="card-list">
+                        <li>Deep connection to cinematic scores and emotional tracks</li>
+                        <li>Silent longing expressed through sound</li>
+                        <li>Future master of the Guitar, Violin, and Piano</li>
+                    </ul> 
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="contact-wrapper cinematic-reveal">
+                <div class="section-header">
+                    <h2 class="section-title">Establish Link</h2>
+                    <div class="section-separator"></div>
+                    <p class="section-subtitle">Step into the background</p>
+                </div>
+                
+                <p style="color: #aaa; margin-bottom: 30px;">Open to profound conversations, high value opportunities, and collaborative ventures.</p>
+
+                <div class="contact-grid">
+                    <a href="mailto:anandkrdhs42@gmail.com" class="btn contact-btn"><i>📧</i> Transmit Mail</a>
+                    <a href="https://www.instagram.com/anandkumar.__" target="_blank" class="btn contact-btn"><i>📷</i> Instagram</a>
+                    <a href="https://github.com/divine-ak" target="_blank" class="btn contact-btn"><i>💻</i> GitHub</a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p class="footer-quote">Throughout Heaven and Earth... I Alone Am the Honored One.</p>
+            <p class="footer-copy">© 2026 Anand Kumar</p>
+        </footer>
+    </div>
+
+    <script>
+        // Generate Embers (Sparks)
+        const sparksContainer = document.getElementById('sparks-container');
+        const particleCount = 40;
+
+        for (let i = 0; i < particleCount; i++) {
+            let spark = document.createElement('div');
+            spark.classList.add('spark');
+            
+            // Randomize properties
+            let size = Math.random() * 4 + 1; // 1px to 5px
+            let leftPos = Math.random() * 100; // 0% to 100vw
+            let delay = Math.random() * 15; // 0s to 15s delay
+            let duration = Math.random() * 10 + 10; // 10s to 20s travel time
+
+            spark.style.width = `${size}px`;
+            spark.style.height = `${size}px`;
+            spark.style.left = `${leftPos}vw`;
+            spark.style.animationDelay = `${delay}s`;
+            spark.style.animationDuration = `${duration}s`;
+
+            sparksContainer.appendChild(spark);
+        }
+
+        // Cinematic Scroll Reveal (Heavy Blur to Sharp Focus)
+        const revealElements = document.querySelectorAll('.cinematic-reveal');
+        
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Reveal only once for cinematic effect
+                }
+            });
+        }, { 
+            threshold: 0.15, 
+            rootMargin: "0px 0px -100px 0px" 
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Active Navigation Tracking
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('section');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 300)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href').includes(current)) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
